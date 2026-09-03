@@ -1,5 +1,8 @@
 # 外卖点餐系统
 
+[![www.bysj.site](../../assets/og-cover.png)](https://www.bysj.site/)
+
+
 > 对照草稿，不是可运行工程。完整案例见 [www.bysj.site](https://www.bysj.site/)
 
 > 技术栈：Spring Boot + Vue + Elasticsearch
@@ -147,11 +150,11 @@ static boolean inRadius(double uLat, double uLng, double sLat, double sLng, int 
 
 同类问题里，最常见的不是「不会写某段代码」，而是边界没钉死。下面两张图是公开资料里的结构示意，适合贴在笔记本旁边对照（非代写、不包过）。
 
-![Java 方向项目封面](https://www.bysj.site/blog/img/cover-java.jpg)
+![Java 方向项目封面](../../assets/cover-java.jpg)
 
 *Java / Spring Boot 方向可参考站点案例结构*
 
-![Python 方向项目封面](https://www.bysj.site/blog/img/cover-python.jpg)
+![Python 方向项目封面](../../assets/cover-python.jpg)
 
 *Python 数据分析 / 小系统方向同样适用*
 
