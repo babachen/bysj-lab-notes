@@ -1,0 +1,24 @@
+# 外卖点餐系统 对照草稿，不是可提交作业。自己实现。
+function create_order(user, shop_id, items, user_lat, user_lng, now):
+  shop = catalog.get_shop(shop_id)          // 权威源
+  if shop.status != OPEN: fail("店铺不可下单")
+  if not within_hours(shop.open_time, shop.close_time, now): fail("非营业时间")
+  dist = haversine(user_lat, user_lng, shop.lat, shop.lng)
+  if dist > shop.radius_m: fail("超出配送半径")
+
+  begin_tx:
+    lock sku rows for update where id in items.sku_ids
+    snapshot_radius = {user_lat, user_lng, shop.lat, shop.lng, shop.radius_m, now}
+    lines = []
+    pay = 0
+    for it in items:
+      sku = catalog.get_sku(shop_id, it.sku_code)
+      if sku.stock_qty < it.qty: fail("库存不足")
+      lines.append({sku, qty: it.qty, price: sku.price_cent, stock_before: sku.stock_qty})
+      sku.stock_qty -= it.qty
+      pay += sku.price_cent * it.qty
+    order = insert order_head(CREATED, snapshot_radius, pay)
+    insert order_item(lines)
+  commit
+  enqueue search_replica.invalidate(shop_id)  // 失败忽略
+  return order
