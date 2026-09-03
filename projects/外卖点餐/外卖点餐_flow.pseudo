@@ -1,0 +1,7 @@
+# 外卖点餐系统 对照草稿，不是可提交作业。自己实现。
+shop(id, name, lat, lng, radius_m, open_time, close_time, status)
+sku(id, shop_id, sku_code, name, price_cent, stock_qty, updated_at)
+  UNIQUE(shop_id, sku_code)
+order_head(id, user_id, shop_id, status, user_lat, user_lng,
+           radius_m, frozen_at, pay_cent, created_at)
+order_item(id, order_id, sku_id, qty, price_cent, stock_before)
