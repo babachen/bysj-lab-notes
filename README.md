@@ -14,7 +14,7 @@
 完整选题、案例结构与自检清单见 **[www.bysj.site](https://www.bysj.site/)**。
 
 ## 项目
-
+- [酒店预约系统](projects/酒店预约/) — Spring Boot + Vue + Elasticsearch · 开题就锁 Spring Boot+Vue+ES 做酒店智能搜房，两周后空
 - [外卖点餐系统](projects/外卖点餐/) — Spring Boot + Vue + Elasticsearch · 开题就把 ES 接进下单，搜得到黄焖鸡却下不了单、打烊店仍可点。先钉菜单
 
 ## 笔记
