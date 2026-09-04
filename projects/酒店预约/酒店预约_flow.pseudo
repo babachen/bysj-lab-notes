@@ -1,0 +1,13 @@
+# 酒店预约系统 对照草稿，不是可提交作业。自己实现。
+function createReservation(guest, roomTypeId, inDate, outDate, now):
+  nights = eachDate(inDate, outDate)  // 不含退房日
+  if nights empty: reject
+  begin tx
+    rows = lockOccupancy(roomTypeId, nights)  // SELECT ... FOR UPDATE
+    if any leftover < 1: rollback; reject "该夜已满"
+    for r in rows:
+      r.leftover -= 1
+      r.version += 1
+    res = insert reservation(status=HOLD, hold_until=now+15min)
+    commit
+  return res
