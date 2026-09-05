@@ -1,0 +1,30 @@
+# 招聘信息发布系统 对照草稿，不是可提交作业。自己实现。
+FUNCTION apply_job(student_id, job_id):
+    // 1. 状态前置检查
+    job = query_job_by_id(job_id)
+    IF job IS NULL OR job.status != 1 THEN
+        RETURN error("岗位不存在或未在招聘中")
+    END IF
+
+    resume = query_resume_by_student(student_id)
+    IF resume IS NULL OR resume.is_complete == false THEN
+        RETURN error("请先完善在线简历")
+    END IF
+
+    // 2. 防重复投递校验
+    existing = query_application(job_id, student_id)
+    IF existing IS NOT NULL THEN
+        RETURN error("您已投递过该岗位，请勿重复操作")
+    END IF
+
+    // 3. 构造不可变快照
+    job_snap = freeze_json(job.title, job.salary_min, job.salary_max, job.company_name)
+    resume_snap = freeze_json(resume.name, resume.education, resume.skills_text)
+
+    // 4. 落库并捕获唯一索引冲突
+    TRY:
+        insert_application(job_id, student_id, job_snap, resume_snap, status=0)
+        RETURN success("投递成功")
+    CATCH UniqueConstraintViolation:
+        RETURN error("并发投递冲突，请稍后刷新重试")
+END FUNCTION
