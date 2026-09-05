@@ -14,6 +14,7 @@
 完整选题、案例结构与自检清单见 **[www.bysj.site](https://www.bysj.site/)**。
 
 ## 项目
+- [招聘信息发布系统](projects/招聘信息发布/) — Python Flask + Vue + MySQL · 很多招聘毕设卡在简历OCR解析、爬虫封禁与复杂推荐算法。本文将系统边界收
 - [酒店预约系统](projects/酒店预约/) — Spring Boot + Vue + Elasticsearch · 开题就锁 Spring Boot+Vue+ES 做酒店智能搜房，两周后空
 - [外卖点餐系统](projects/外卖点餐/) — Spring Boot + Vue + Elasticsearch · 开题就把 ES 接进下单，搜得到黄焖鸡却下不了单、打烊店仍可点。先钉菜单
 
