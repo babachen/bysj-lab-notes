@@ -1,0 +1,26 @@
+# 校园跑腿系统 对照草稿，不是可提交作业。自己实现。
+FUNCTION accept_task(task_id, runner_id):
+    // 1. 本地前置校验：接单人不能是发单人
+    task = DB.query("SELECT publisher_id, status, version FROM errand_task WHERE id = ?", task_id)
+    IF task IS NULL THEN RETURN ERROR("任务不存在")
+    IF task.publisher_id == runner_id THEN RETURN ERROR("不能承接自己发布的订单")
+    IF task.status != 'PENDING' THEN RETURN ERROR("手慢了，订单已被接取")
+
+    // 2. 排他性更新（条件写）：利用单行写锁保证原子性
+    affected_rows = DB.execute("""
+        UPDATE errand_task 
+        SET runner_id = :runner_id, 
+            status = 'ACCEPTED', 
+            version = version + 1 
+        WHERE id = :task_id 
+          AND status = 'PENDING' 
+          AND version = :expected_version
+    """, runner_id=runner_id, task_id=task_id, expected_version=task.version)
+
+    // 3. 判定更新结果
+    IF affected_rows == 0 THEN
+        RETURN ERROR("并发冲突，接单失败")
+    END IF
+
+    RETURN SUCCESS("接单成功")
+END FUNCTION
