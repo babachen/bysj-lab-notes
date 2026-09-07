@@ -1,0 +1,8 @@
+# 景点门票预约系统 对照草稿，不是可提交作业。自己实现。
+<update id="decreaseStock">
+    UPDATE ticket_stock
+    SET remain_stock = remain_stock - #{buyNum},
+        version = version + 1
+    WHERE id = #{stockId} 
+      AND remain_stock >= #{buyNum}
+</update>
