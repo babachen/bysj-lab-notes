@@ -1,0 +1,31 @@
+# 快递代收管理系统 对照草稿，不是可提交作业。自己实现。
+FUNCTION handle_package_inbound(tracking_num, phone, target_slot_id):
+    BEGIN TRANSACTION
+        // 1. 检查单号是否已在库
+        existing = SELECT id FROM package_item 
+                   WHERE tracking_number = tracking_num AND status = 'STORED'
+        IF existing IS NOT NULL THEN
+            ROLLBACK
+            RETURN Error("该运单已在代收点在库，无法重复入库")
+        END IF
+        
+        // 2. 检查并锁定货位状态
+        slot = SELECT id, is_active FROM shelf_slot WHERE id = target_slot_id FOR UPDATE
+        IF slot IS NULL OR slot.is_active == FALSE THEN
+            ROLLBACK
+            RETURN Error("无效货位")
+        END IF
+        
+        // 3. 本地生成 6 位确定性校验码（结合时间戳与手机号取模，非外部依赖）
+        code = GENERATE_OFFLINE_PIN(phone)
+        
+        // 4. 插入在库记录（若此时该货位被并发占用，数据库唯一索引将抛出异常）
+        TRY:
+            INSERT INTO package_item(tracking_number, receiver_phone, shelf_slot_id, pickup_code, status)
+            VALUES (tracking_num, phone, target_slot_id, code, 'STORED')
+            COMMIT TRANSACTION
+            RETURN Success(pickup_code = code)
+        CATCH UniqueConstraintViolation:
+            ROLLBACK
+            RETURN Error("货位已被并发占用，请重新选择货位")
+END FUNCTION
