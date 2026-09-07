@@ -14,6 +14,7 @@
 完整选题、案例结构与自检清单见 **[www.bysj.site](https://www.bysj.site/)**。
 
 ## 项目
+- [景点门票预约系统](projects/景点门票预约/) — Spring Boot + Vue + Elasticsearch · 景点预约毕设常陷入高并发秒杀与ES集群死循环。本文通过真实内存撑爆死胡同
 - [快递代收管理系统](projects/快递代收管理/) — Django + Vue + PostgreSQL · 多数快递代收毕设卡在商业开放平台资质审核与短信API封禁。本文剔除公网运
 - [校园跑腿系统](projects/校园跑腿/) — Django + Vue + PostgreSQL · 许多校园跑腿毕设卡在校内路网缺失与接单并发冲突。本文用楼宇网格字典剔除高
 - [招聘信息发布系统](projects/招聘信息发布/) — Python Flask + Vue + MySQL · 很多招聘毕设卡在简历OCR解析、爬虫封禁与复杂推荐算法。本文将系统边界收
