@@ -14,6 +14,7 @@
 完整选题、案例结构与自检清单见 **[www.bysj.site](https://www.bysj.site/)**。
 
 ## 项目
+- [社区养老服务系统](projects/社区养老服务/) — Spring Boot + 小程序 + Redis · 很多社区养老毕设卡在穿戴设备蓝牙丢包、跌倒检测误报与多端抢单冲突。本文把
 - [仓储出入库系统](projects/仓储出入库/) — Python Flask + Vue + MySQL · 仓储毕设常因堆砌RFID硬件联动与立体库装箱算法导致单线程阻塞或表单击穿
 - [景点门票预约系统](projects/景点门票预约/) — Spring Boot + Vue + Elasticsearch · 景点预约毕设常陷入高并发秒杀与ES集群死循环。本文通过真实内存撑爆死胡同
 - [快递代收管理系统](projects/快递代收管理/) — Django + Vue + PostgreSQL · 多数快递代收毕设卡在商业开放平台资质审核与短信API封禁。本文剔除公网运
