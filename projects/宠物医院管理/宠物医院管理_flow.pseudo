@@ -1,0 +1,31 @@
+# 宠物医院管理系统 对照草稿，不是可提交作业。自己实现。
+FUNCTION createAppointment(petChipId, doctorId, scheduleId):
+    // 1. 校验入参合法性
+    SCHEDULE = queryScheduleForUpdate(scheduleId)
+    IF SCHEDULE == NULL THEN
+        RETURN ERROR("排班不存在")
+    END IF
+
+    // 2. 检查当前时段该宠物是否已挂号
+    EXIST_ORDER = queryActiveOrder(petChipId, SCHEDULE.work_date, SCHEDULE.time_slot)
+    IF EXIST_ORDER != NULL THEN
+        RETURN ERROR("该宠物在此时段已有有效挂号单")
+    END IF
+
+    // 3. 原子扣减号源并生成订单
+    ROWS_AFFECTED = EXECUTE_SQL(
+        "UPDATE doctor_schedule \
+         SET used_quota = used_quota + 1, version = version + 1 \
+         WHERE id = :scheduleId AND used_quota < total_quota AND version = :version",
+        scheduleId, SCHEDULE.version
+    )
+
+    IF ROWS_AFFECTED == 0 THEN
+        RETURN ERROR("号源已约满或并发冲突，请重试")
+    END IF
+
+    ORDER_NO = generateUniqueOrderNo()
+    INSERT_APPOINTMENT(ORDER_NO, petChipId, doctorId, scheduleId, STATUS_RESERVED)
+
+    RETURN SUCCESS(ORDER_NO)
+END FUNCTION
