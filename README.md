@@ -14,6 +14,7 @@
 完整选题、案例结构与自检清单见 **[www.bysj.site](https://www.bysj.site/)**。
 
 ## 项目
+- [招聘信息发布系统](projects/招聘信息发布/) — Python Flask + Vue + MySQL · 很多招聘毕设开题就堆大模型简历初筛与爬虫抓取，中期卡在显存爆满与字段解析
 - [宠物医院管理系统](projects/宠物医院管理/) — Spring Boot + Vue + MySQL · 很多宠物医院毕设卡在宠物鼻纹图像识别与WebRTC实时问诊。本文砍掉不可
 - [宿舍报修系统](projects/宿舍报修/) — Spring Boot + 小程序 + Redis · 宿舍报修毕设常因硬塞师傅实时轨迹与WebSocket聊天，导致本地内存耗
 - [社区养老服务系统](projects/社区养老服务/) — Spring Boot + 小程序 + Redis · 很多社区养老毕设卡在穿戴设备蓝牙丢包、跌倒检测误报与多端抢单冲突。本文把
