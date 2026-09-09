@@ -1,0 +1,18 @@
+# 快递代收管理系统 对照草稿，不是可提交作业。自己实现。
+ALGORITHM: ParcelInbound(tracking_num, phone, target_shelf_id)
+INPUT: tracking_num (字符串), phone (11位手机号), target_shelf_id (整数)
+OUTPUT: Result (成功附带取件码，或失败原因)
+
+BEGIN TRANSACTION
+    1. SELECT * FROM tb_shelf WHERE id = target_shelf_id FOR UPDATE
+    2. IF shelf.current_count >= shelf.capacity THEN
+           ROLLBACK
+           RETURN Error("指定货架已满，请调度至暂存区")
+       END IF
+    3. sequence_num = shelf.current_count + 1
+    4. pickup_code = FORMAT("{0}-{1:03d}", shelf.code, sequence_num)
+    5. INSERT INTO tb_parcel (tracking_number, recipient_phone, shelf_id, pickup_code, status, inbound_time)
+       VALUES (tracking_num, phone, target_shelf_id, pickup_code, 0, NOW())
+    6. UPDATE tb_shelf SET current_count = current_count + 1 WHERE id = target_shelf_id
+COMMIT
+RETURN Success(pickup_code)
