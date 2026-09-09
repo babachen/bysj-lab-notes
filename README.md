@@ -14,6 +14,7 @@
 完整选题、案例结构与自检清单见 **[www.bysj.site](https://www.bysj.site/)**。
 
 ## 项目
+- [宿舍报修系统](projects/宿舍报修/) — Spring Boot + 小程序 + Redis · 宿舍报修毕设常因硬塞师傅实时轨迹与WebSocket聊天，导致本地内存耗
 - [社区养老服务系统](projects/社区养老服务/) — Spring Boot + 小程序 + Redis · 很多社区养老毕设卡在穿戴设备蓝牙丢包、跌倒检测误报与多端抢单冲突。本文把
 - [仓储出入库系统](projects/仓储出入库/) — Python Flask + Vue + MySQL · 仓储毕设常因堆砌RFID硬件联动与立体库装箱算法导致单线程阻塞或表单击穿
 - [景点门票预约系统](projects/景点门票预约/) — Spring Boot + Vue + Elasticsearch · 景点预约毕设常陷入高并发秒杀与ES集群死循环。本文通过真实内存撑爆死胡同
