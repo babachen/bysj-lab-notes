@@ -1,0 +1,39 @@
+# 农业物联网监测系统 对照草稿，不是可提交作业。自己实现。
+// 接口：POST /api/v1/gateway/telemetry
+FUNCTION ingest_telemetry_pipeline(request_headers, payload):
+    // 1. 网关身份与凭证校验
+    token = request_headers.get("X-Device-Token")
+    device = DB.query(Device).filter(device_code=payload.device_code, auth_token=token).first()
+    IF device IS NULL OR NOT device.is_active THEN
+        RETURN Response(status=401, error="Invalid device credentials")
+    END IF
+
+    // 2. 字段边界清洗（过滤传感器电气噪点产生的荒谬数值）
+    IF payload.temp < -40.0 OR payload.temp > 80.0 OR payload.humidity < 0 OR payload.humidity > 100 THEN
+        RETURN Response(status=422, error="Metrics out of physical range")
+    END IF
+
+    // 3. 遥测入库与活跃时间刷新
+    telemetry_record = DB.insert(Telemetry)(
+        device_id=device.id,
+        temperature=payload.temp,
+        humidity=payload.humidity,
+        co2_ppm=payload.co2,
+        recorded_at=NOW()
+    )
+    device.update(last_seen_at=NOW())
+
+    // 4. 判定告警规则并联动
+    TEMP_THRESHOLD_UPPER = 35.0
+    IF payload.temp > TEMP_THRESHOLD_UPPER THEN
+        DB.insert(AlertLog)(
+            device_id=device.id,
+            metric_name="temperature",
+            trigger_value=payload.temp,
+            threshold_value=TEMP_THRESHOLD_UPPER,
+            resolved=FALSE
+        )
+    END IF
+
+    RETURN Response(status=200, message="Telemetry received")
+END FUNCTION
