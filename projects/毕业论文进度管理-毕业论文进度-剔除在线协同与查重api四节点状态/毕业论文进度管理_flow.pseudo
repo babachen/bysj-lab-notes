@@ -1,0 +1,29 @@
+# 毕业论文进度管理系统 对照草稿，不是可提交作业。自己实现。
+ENUM PhaseStatus {
+    UNSUBMITTED = 0, // 未提交
+    SUBMITTED   = 1, // 已提交/待评审
+    REJECTED    = 2, // 已驳回/待修改
+    PASSED      = 3  // 已通过
+}
+
+FUNCTION ReviewSubmission(studentId, phase, action, comment):
+    FETCH currentRecord FROM milestone_submission WHERE student_id = studentId AND phase = phase
+    IF currentRecord IS NULL THEN
+        THROW Exception("该阶段提交记录不存在")
+    
+    IF currentRecord.status != SUBMITTED THEN
+        THROW Exception("当前记录非待审核状态，禁止变更")
+        
+    IF action == "PASS" THEN
+        UPDATE milestone_submission 
+        SET status = PASSED, reviewer_comment = comment, update_time = NOW()
+        WHERE id = currentRecord.id AND status = SUBMITTED
+        
+        IF phase != DEFENSE THEN
+            UNLOCK NextPhase(studentId, phase + 1)
+        END IF
+    ELSE IF action == "REJECT" THEN
+        UPDATE milestone_submission 
+        SET status = REJECTED, reviewer_comment = comment, update_time = NOW()
+        WHERE id = currentRecord.id AND status = SUBMITTED
+    END IF
