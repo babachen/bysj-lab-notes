@@ -1,0 +1,24 @@
+# 实验室预约系统 对照草稿，不是可提交作业。自己实现。
+FUNCTION applySeatReservation(userId, seatId, targetDate, slotIndex):
+    // 步骤 1: 检查用户失信状态
+    activePunish = SELECT COUNT(1) FROM lab_punishment 
+                   WHERE user_id = userId AND expire_time > NOW()
+    IF activePunish > 0 THEN:
+        RETURN ERROR("存在未解除违约惩罚，禁止预约")
+    END IF
+
+    // 步骤 2: 校验台位状态
+    seat = SELECT * FROM lab_seat WHERE id = seatId
+    IF seat.status != 1 THEN:
+        RETURN ERROR("台位处于维护中")
+    END IF
+
+    // 步骤 3: 尝试写入预约（依靠数据库唯一索引拦截撞车）
+    checkinCode = generateRandomCode(6)
+    TRY:
+        INSERT INTO lab_reservation (user_id, seat_id, slot_date, slot_index, checkin_code, status)
+        VALUES (userId, seatId, targetDate, slotIndex, checkinCode, 0)
+        RETURN SUCCESS(checkinCode)
+    CATCH DuplicateKeyException:
+        RETURN ERROR("该台位在该时段已被预约")
+END FUNCTION
