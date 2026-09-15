@@ -3,15 +3,31 @@
 计算机毕设系统设计草稿：每个 `projects/` 文件夹对应一个「XX 系统」伪代码对照，**不是可运行仓库**，请自己实现。
 
 <p align="center">
-  <a href="https://www.bysj.site/"><img src="assets/og-cover.png" alt="www.bysj.site 首页封面" width="720"/></a>
+  <a href="https://www.bysj888.com/"><img src="assets/og-cover.png" alt="毕设无忧 bysj888.com" width="720"/></a>
 </p>
 
 <p align="center">
-  <a href="https://www.bysj.site/">www.bysj.site</a> ·
-  <a href="https://www.bysj.site/free-topic-check.html">选题自检</a>
+  <b>方法站</b>
+  <a href="https://www.bysj888.com/">www.bysj888.com</a> ·
+  <a href="https://www.bysj888.com/choke-points/">卡点速查</a> ·
+  <a href="https://www.bysj888.com/topics/">40 题</a> ·
+  <a href="https://www.bysj888.com/free-topic-check">选题自测</a>
+  <br/>
+  <b>案例预览</b>
+  <a href="https://app.bysj.site/">app.bysj.site</a> ·
+  <a href="https://www.bysj888.com/feed.xml">RSS</a>
 </p>
 
-完整选题、案例结构与自检清单见 **[www.bysj.site](https://www.bysj.site/)**。
+完整选题、开题/答辩清单与卡点长文见 **[www.bysj888.com](https://www.bysj888.com/)**。  
+卡在微服务 / 工期 / 查重 / 答辩时，直接打开 **[卡点速查](https://www.bysj888.com/choke-points/)**。
+
+## 高频卡点（外链）
+- [导师要微服务怎么回](https://www.bysj888.com/blog/no-microservices-for-thesis)
+- [只剩 6 周怎么做](https://www.bysj888.com/blog/six-weeks-graduation-plan)
+- [是不是你做的怎么答](https://www.bysj888.com/blog/prove-you-built-it)
+- [查重高了怎么改](https://www.bysj888.com/blog/thesis-plagiarism-rewrite)
+- [开题被打回怎么改](https://www.bysj888.com/blog/proposal-rejected-fix)
+- [冲突检测怎么写](https://www.bysj888.com/blog/booking-conflict-check)
 
 ## 项目
 - [实验室预约系统](projects/实验室预约-选题别碰人脸门禁台位时段锁与违约记次的收敛笔记/) — Spring Boot + 小程序 + Redis · 多数实验室预约毕设卡在人脸门禁硬件联调与跨天排期死锁。本文砍掉实体门禁与
@@ -38,7 +54,7 @@
 
 ## 关于图片
 
-仓库内 `assets/` 来自 [www.bysj.site](https://www.bysj.site/) 公开封面（首页 OG 与案例图），使用**本地相对路径**，避免 GitHub 外链裂图。
+仓库内 `assets/` 来自公开封面（首页 OG 与案例图），使用**本地相对路径**，避免 GitHub 外链裂图。
 
 | 文件 | 说明 |
 | --- | --- |
