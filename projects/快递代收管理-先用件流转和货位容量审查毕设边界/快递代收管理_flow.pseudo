@@ -1,0 +1,23 @@
+# 快递代收管理系统 对照草稿，不是可提交作业。自己实现。
+# 示意伪代码：审核包裹并分配货位
+function verify_and_store(parcel_id, slot_id, operator_id):
+    begin transaction
+    parcel = lock parcel where id = parcel_id
+    slot = lock storage_slot where id = slot_id
+
+    if parcel is null or parcel.status != 'PENDING':
+        rollback
+        return '包裹状态不允许审核'
+    if slot is null or slot.is_enabled is false:
+        rollback
+        return '货位不可用'
+    if slot.used_count >= slot.capacity:
+        rollback
+        return '货位已满'
+
+    create parcel_slot(parcel_id, slot_id, assigned_at=now())
+    update storage_slot set used_count = used_count + 1
+    update parcel set status = 'STORED', verified_at = now()
+    create operation_log(parcel_id, operator_id, 'VERIFY_STORE', '')
+    commit
+    return '入库成功'
