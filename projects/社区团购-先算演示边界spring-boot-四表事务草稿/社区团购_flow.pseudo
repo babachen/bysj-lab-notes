@@ -1,0 +1,19 @@
+# 社区团购系统 对照草稿，不是可提交作业。自己实现。
+# 示意伪代码：创建团购订单，要求在同一事务内执行
+createOrder(userId, activityId, quantity):
+    if quantity <= 0:
+        reject("数量必须大于0")
+
+    activity = select activity by id for update
+    if activity is null or activity.status != "OPEN":
+        reject("活动不可下单")
+    if now < activity.start_at or now > activity.end_at:
+        reject("不在活动时间内")
+    if activity.stock_total - activity.stock_used < quantity:
+        reject("库存不足")
+
+    amount = activity.group_price * quantity
+    insert order(user_id, activity_id, quantity,
+                 unit_price, total_amount, status="PENDING")
+    update activity set stock_used = stock_used + quantity
+    return orderId
