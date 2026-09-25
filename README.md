@@ -30,6 +30,7 @@
 - [冲突检测怎么写](https://www.bysj888.com/blog/booking-conflict-check)
 
 ## 项目
+- [社区团购系统](projects/社区团购-先算演示边界spring-boot-四表事务草稿/) — Spring Boot + Vue + MySQL · 社区团购毕设容易被团长、配送、退款和实时库存拖大。本文从选题边界出发，收
 - [实验室预约系统](projects/实验室预约-选题别碰人脸门禁台位时段锁与违约记次的收敛笔记/) — Spring Boot + 小程序 + Redis · 多数实验室预约毕设卡在人脸门禁硬件联调与跨天排期死锁。本文砍掉实体门禁与
 - [宿舍报修系统](projects/宿舍报修-别碰抢单池与耗材进销存5个核心接口与redis幂/) — Spring Boot + 小程序 + Redis · 多数报修系统毕设在中期崩在抢单并发锁与耗材负库存上。本文剔除抢单大厅与进
 - [农业物联网监测系统](projects/农业物联网监测-农业物联网-先砍田间硬件网关模拟上报时序降采样与/) — Django + Vue + PostgreSQL · 多数农业物联网毕设死于树莓派传感器离线、校园网MQTT断连与现场插线翻车
@@ -64,3 +65,5 @@
 | `assets/cover-checklist.jpg` | 验收清单 |
 | `assets/cover-java.jpg` | Java / Spring Boot |
 | `assets/cover-python.jpg` | Python 方向 |
+
+完整案例见 [www.bysj.site](https://www.bysj.site/)
