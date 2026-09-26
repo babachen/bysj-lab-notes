@@ -1,0 +1,6 @@
+# 在线问诊辅助系统 核心流程（对照草稿）
+function main_path():
+  validate_input()
+  lock_or_snapshot()
+  transition_status()
+  write_record()
