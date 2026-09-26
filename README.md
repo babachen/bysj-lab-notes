@@ -30,6 +30,7 @@
 - [冲突检测怎么写](https://www.bysj888.com/blog/booking-conflict-check)
 
 ## 项目
+- [外卖点餐系统](projects/外卖点餐-把可行性钉在订单快照模块边界最小表与审核流程/) — Spring Boot + Vue + Elasticsearch · 外卖毕设常卡在支付、骑手定位和搜索联调。本文用商家审核、价格快照、订单状
 - [在线问诊辅助系统](projects/在线问诊辅助-先砍掉诊断与实时通信spring-boot-单库/) — Spring Boot + Vue + MySQL · 在线问诊题目容易滑向AI诊断、视频问诊和支付链路，最终难以验收。本文用角
 - [快递代收管理系统](projects/快递代收管理-先用件流转和货位容量审查毕设边界/) — Django + Vue + PostgreSQL · 快递代收题目容易滑向短信、运单接口和智能柜联动。本文用件流转、货位容量与
 - [社区团购系统](projects/社区团购-先算演示边界spring-boot-四表事务草稿/) — Spring Boot + Vue + MySQL · 社区团购毕设容易被团长、配送、退款和实时库存拖大。本文从选题边界出发，收
