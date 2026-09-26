@@ -1,0 +1,31 @@
+# 外卖点餐系统 对照草稿，不是可提交作业。自己实现。
+// 示意伪代码：创建订单，不可直接运行
+function createOrder(userId, cartItems):
+    require cartItems is not empty
+    begin transaction
+
+    grouped = groupByMerchant(cartItems)
+    if grouped.size != 1:
+        reject("首版只允许同一商家下单")
+
+    merchantId = grouped.first.merchantId
+    merchant = merchantRepo.find(merchantId)
+    require merchant.auditStatus == APPROVED
+
+    order = new Order(userId, merchantId, PENDING_PAY)
+    for item in cartItems:
+        dish = dishRepo.findForUpdate(item.dishId)
+        require dish.merchantId == merchantId
+        require dish.saleStatus == ON_SALE
+        require dish.stock >= item.quantity
+
+        line = item.quantity * dish.price
+        order.addItem(dish.id, dish.name, dish.price, item.quantity, line)
+        dish.stock -= item.quantity
+        dishRepo.update(dish)
+
+    order.totalAmount = order.sumLines()
+    orderRepo.insert(order)
+    statusLogRepo.append(null, PENDING_PAY, userId)
+    commit
+    return order.id
